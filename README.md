@@ -1,264 +1,216 @@
-# FOCUSED WEB CRAWLER – MUSIC
+# Focused Web Crawler - Topic: Music
 
-## 1. Selected Topic
+Assignment 1 - SEG301 (Crawls and Feeds)
 
-**Topic: Music (Âm nhạc)**
+A focused web crawler written in Python. It starts from seed URLs, discovers pages
+by following hyperlinks with Breadth-First Search (BFS), stores the collected data in
+SQLite, and prints crawling statistics.
 
-**Selected domain: NhacCuaTui**
+## 1. Selected topic
 
-Website được sử dụng trong project:
+**Topic:** Music (approved by the lecturer)
 
-```text
-https://www.nhaccuatui.com/
+**Domain:** Nhac.vn (`nhac.vn`)
+
+> Note: the assignment recommends at least 2 domains. Other Music domains were
+> tested but could not be crawled: nhaccuatui.com renders content with
+> JavaScript (only 4 static links found), and chiasenhac.vn could not be
+> reached (connection failed). The lecturer approved using nhac.vn only.
+ 
+## 2. Seed URLs
+
+1. https://nhac.vn/
+
+## 3. Crawling configuration
+
+| Parameter        | Value      |
+|------------------|------------|
+| Maximum pages    | 300        |
+| Maximum depth    | 3          |
+| Request timeout  | 10 seconds |
+| Crawl delay      | 1 second   |
+
+**Why a 1-second delay?** Sending requests continuously can overload a website and
+gets the crawler blocked. One second between requests is a polite rate for a small
+educational crawl, while still finishing 300 pages in about 10 minutes.
+
+All parameters are defined in `config.py`.
+
+## 4. Crawling strategy
+
+**Why BFS?** BFS visits all pages of depth *d* before any page of depth *d+1*.
+For a focused crawl this gives a broad and balanced coverage of each website
+(the home page, category pages, then song/artist pages) instead of going deep into a single
+branch. It also makes the depth limit easy to enforce.
+
+**How the URL Frontier works** (`url_frontier.py`):
+- The frontier stores `(url, depth)` pairs in FIFO queues (`collections.deque`).
+- `append` adds newly discovered URLs, `popleft` selects the next URL, so the
+  oldest URL (lowest depth) is always crawled first: this is BFS.
+- There is one queue per domain, and `next()` picks domains in round-robin order.
+  This prevents one large domain from filling the whole frontier when several
+  domains are crawled together. With a single domain (`nhac.vn`) it behaves exactly
+  like one plain BFS queue.
+- Seeds enter with depth 0; links found on a page of depth *d* get depth *d+1*.
+- Links are added only if `depth + 1 <= MAX_DEPTH`.
+- Three collections avoid duplicates: `in_frontier` (URLs waiting), `visited`
+  (URLs already taken to be crawled) and `discovered` (all unique URLs ever accepted).
+- URLs are normalized first (see below).
+
+**Stopping conditions:** the crawl stops when `MAX_PAGES` is reached or the frontier
+is empty.
+
+**robots.txt:** for each domain, `robots.txt` is downloaded once (cached) and parsed
+with `urllib.robotparser`. URLs disallowed for our User-Agent are skipped.
+
+## 5. URL filtering rules
+
+A discovered link is accepted only if **all** rules pass:
+
+1. Relative URLs are converted to absolute URLs with `urljoin`.
+2. Ignored schemes: `mailto:`, `javascript:`, `tel:`, `ftp:`, `sms:`, `data:`.
+   Only `http` and `https` are accepted.
+3. Ignored file types: images (`.jpg .png .gif .svg ...`), `.css`, `.js`,
+   archives (`.zip ...`), documents (`.pdf ...`), audio/video, fonts.
+4. **Domain rule:** the host must equal an allowed domain or be one of its subdomains
+   (`www.example.com` and `sub.example.com` both match `example.com`).
+   `facebook.com` and other external sites are rejected.
+5. **Normalization:** the `#fragment` is removed, scheme/host are lowercased and the
+   trailing slash is removed, so `/news/1`, `/news/1/` and `/news/1#top` are one URL.
+6. **Duplicates:** URLs already visited or already waiting in the frontier are skipped.
+7. **Depth:** links beyond `MAX_DEPTH` are not added.
+8. **robots.txt:** disallowed URLs are skipped.
+
+Only responses with status 200 and an HTML content type are parsed. Other responses
+(404, 403, 500, ...) and failed requests (timeout, connection error) are recorded in
+the database and the crawler continues.
+
+## 6. Database design
+
+File: `data/crawler.db` (SQLite)
+
+**Table `pages`** - one row per crawled URL.
+
+| Column        | Description                                              |
+|---------------|----------------------------------------------------------|
+| id            | Primary key                                              |
+| url           | Page URL (UNIQUE)                                        |
+| domain        | Website domain                                           |
+| title         | Page title                                               |
+| content       | Extracted visible text (no preprocessing yet)            |
+| depth         | Crawl depth                                              |
+| status_code   | HTTP status code (0 = no response: timeout/connection)   |
+| crawled_at    | Crawl timestamp                                          |
+
+**Table `links`** - one row per hyperlink (source -> target).
+
+| Column      | Description                    |
+|-------------|--------------------------------|
+| id          | Primary key                    |
+| source_url  | URL of the page with the link  |
+| target_url  | Extracted target URL           |
+
+`pages` holds the content that will be indexed in the next assignment. `links` stores
+the web graph (which page links to which), useful for link analysis and for measuring
+how many URLs were discovered.
+
+## 7. Crawling results
+
+
+
+```
+========== CRAWLING SUMMARY ==========
+Topic                  : Music
+Seed URLs              : 1
+Stop reason            : MAX_PAGES reached
+Pages Crawled          : 300
+Unique URLs Discovered : 3784
+Skipped URLs           : 27344
+Blocked by robots.txt  : 0
+Failed Requests        : 0
+Links stored           : 31127
+Maximum Depth (config) : 3
+Pages per depth:
+  Depth 0 : 1 pages
+  Depth 1 : 162 pages
+  Depth 2 : 137 pages
+Pages per domain:
+  nhac.vn : 300
+HTTP status:
+  HTTP 200 : 300
+=======================================
 ```
 
-Project này chỉ crawl **NhacCuaTui**. Không thêm domain thứ hai vì domain còn lại đã được thành viên khác trong nhóm thực hiện.
+## 8. Analysis of the results (nhac.vn)
 
-## 2. Seed URL
+All numbers below come from `data/crawler.db` (SQL queries), not typed by hand.
 
-```text
-https://www.nhaccuatui.com/
-```
+**1. No page at depth 3.** `MAX_DEPTH` is 3, but the crawl stopped at depth 2.
+The home page links to many category, chart and song pages, so depth 1 alone
+contains 162 pages. Because BFS finishes one level before starting the next,
+`MAX_PAGES = 300` was reached in the middle of depth 2 (137 pages), before any
+depth-3 page was taken from the frontier.
 
-## 3. Crawling Configuration
+**2. Very high duplicate rate.** 31,127 links were stored, but only 3,784 unique
+URLs were discovered, and 27,344 links were skipped as duplicates. On average each
+page contains about 104 links, and most of them are the same menu, header and
+footer links. For example, `https://nhac.vn/` and `https://nhac.vn/album` appear on
+298 different pages. Without the `visited` / `in_frontier` sets the crawler would
+download the same pages again and again.
 
-```text
-Maximum pages  : 50
-Maximum depth  : 2
-Request timeout: 10 seconds
-Crawl delay    : 1 second
-Allowed domain : nhaccuatui.com
-```
+**3. What kind of pages were collected.** Crawled pages by URL section:
+album 114, hot-list 60, bai-hat (songs) 48, nghe-si (artists) 37, video 18, and
+a few chart pages (bang-xep-hang). The 3,784 discovered URLs have a similar mix
+(nghe-si 1,056, album 902, bai-hat 855, video 559). So the content is on topic
+(Music), and the site structure is: home -> category / chart -> album / song /
+artist.
 
-Có thể thay đổi các thông số trong `config.py`.
+**4. The site is crawler-friendly.** All 300 pages returned HTTP 200, with no
+failed request and nothing blocked by robots.txt. The HTML is rendered on the
+server, so the links can be read directly with BeautifulSoup (no JavaScript needed).
+The 300 pages took about 10 minutes (13:21 -> 13:32), about 2 seconds per page
+including the 1-second delay, so the average response time was about 1 second.
 
-## 4. Crawling Strategy
+**5. Page content.** Average extracted text length is about 3,400 characters per
+page. Full song lyrics are removed before saving (copyright), so `content` keeps
+titles, artist names, album descriptions and other page text.
 
-Crawler sử dụng **Breadth-First Search (BFS)**.
+**Problems encountered**
 
-URL Frontier được cài đặt bằng `collections.deque`.
+- **Choosing the domains:** nhaccuatui.com loads its content with JavaScript
+  (only 4 static links found with `check_domain.py`), and chiasenhac.vn could not be
+  reached (connection failed). This is why nhac.vn was used.
+- **Some pages are not real music content:** a few crawled URLs are technical or
+  account pages (`/auth`, `/xhrUser/...`, terms of use). They pass the domain rule
+  because they are on nhac.vn. A path blacklist could remove them.
+- **Query strings:** 425 discovered URLs contain `?` parameters (e.g. paging or
+  sorting). They are kept because they can point to different content, but some of
+  them may be near-duplicates of the same page.
+- **Generic titles:** 12 pages have only the title "Nhac.vn", so the title alone is
+  not always enough to describe a page; the `content` field is needed.
 
-Mỗi phần tử có dạng:
+## How to run
 
-```text
-(url, depth)
-```
-
-Crawler lấy URL đầu hàng đợi bằng `popleft()` và thêm URL mới vào cuối hàng đợi bằng `append()`.
-
-Ví dụ:
-
-```text
-Depth 0
-  NhacCuaTui homepage
-
-Depth 1
-  Page A
-  Page B
-  Page C
-
-Depth 2
-  Page A1
-  Page A2
-  Page B1
-  Page B2
-```
-
-## 5. URL Filtering Rules
-
-Crawler chỉ nhận:
-
-- HTTP hoặc HTTPS
-- Domain `nhaccuatui.com`
-- URL chưa được crawl
-- URL chưa nằm trong Frontier
-- Depth không vượt quá `MAX_DEPTH`
-
-Crawler bỏ qua:
-
-- `mailto:`
-- `javascript:`
-- `tel:`
-- file ảnh
-- CSS
-- JavaScript
-- file nén
-- file âm thanh/video
-- PDF và một số file tài liệu
-
-URL tương đối được chuyển thành URL tuyệt đối bằng `urljoin()`.
-
-Crawler kiểm tra `robots.txt` trước khi fetch URL.
-
-## 6. Page Information
-
-Mỗi trang HTML được lưu:
-
-```text
-url
-domain
-title
-content
-depth
-status_code
-crawled_at
-```
-
-BeautifulSoup được sử dụng để:
-
-- lấy `<title>`
-- lấy text hiển thị
-- tìm các thẻ `<a href="...">`
-
-## 7. Database Design
-
-Database:
-
-```text
-data/crawler.db
-```
-
-### Table: pages
-
-```text
-id
-url
-domain
-title
-content
-depth
-status_code
-crawled_at
-```
-
-### Table: links
-
-```text
-id
-source_url
-target_url
-```
-
-Bảng `pages` lưu thông tin các trang đã crawl.
-
-Bảng `links` lưu quan hệ giữa URL nguồn và URL đích được phát hiện.
-
-## 8. Duplicate URL Handling
-
-Crawler sử dụng:
-
-```python
-visited = set()
-```
-
-để tránh crawl cùng URL nhiều lần.
-
-`URLFrontier` cũng có `waiting` để tránh đưa một URL vào hàng đợi nhiều lần.
-
-## 9. Error Handling
-
-Crawler xử lý các trường hợp:
-
-- HTTP 404
-- HTTP 403
-- HTTP 500
-- timeout
-- connection error
-
-Request lỗi không làm dừng toàn bộ chương trình.
-
-## 10. Crawling Statistics
-
-Sau khi hoàn thành, chương trình hiển thị:
-
-- Pages Crawled
-- Unique URLs Discovered
-- Skipped URLs
-- Failed Requests
-- Maximum Depth
-- số trang theo depth
-- số response theo HTTP status
-
-Các số liệu được tính từ kết quả crawler.
-
-## 11. Project Structure
-
-```text
-music_web_crawler/
-│
-├── main.py
-├── crawler.py
-├── url_frontier.py
-├── parser.py
-├── database.py
-├── config.py
-├── requirements.txt
-├── README.md
-│
-└── data/
-    └── crawler.db
-```
-
-`crawler.db` được tự tạo sau khi chạy.
-
-## 12. How to Run
-
-Mở folder project bằng VS Code.
-
-Cài thư viện:
-
-```powershell
+```bash
 pip install -r requirements.txt
-```
-
-Chạy:
-
-```powershell
 python main.py
 ```
 
-## 13. Expected Output
+The database is created at `data/crawler.db`. Open it with "DB Browser for SQLite"
+to inspect the `pages` and `links` tables.
 
-```text
-=======================================================
-          FOCUSED WEB CRAWLER - MUSIC
-=======================================================
-Topic            : Music
-Seed URLs:
-  1. https://www.nhaccuatui.com/
-Allowed Domains:
-  - nhaccuatui.com
-Maximum Pages    : 50
-Maximum Depth    : 2
-Request Timeout  : 10 seconds
-Crawl Delay      : 1 second(s)
-Database         : data/crawler.db
-=======================================================
+## Project structure
 
-[Crawl #001]
-  Depth : 0
-  URL   : https://www.nhaccuatui.com/
-  Status: 200
-  Title : ...
-  Links : ...
-  Time  : ...
-
-...
-
-==================================================
- CRAWLING SUMMARY
-==================================================
-Topic                 : Music
-Pages Crawled         : ...
-Unique URLs Discovered: ...
-Skipped URLs          : ...
-Failed Requests       : ...
-Maximum Depth         : 2
-...
 ```
-
-## 14. Note
-
-Website structure and crawling policies can change. Before submitting, check the current `robots.txt` and terms of use of NhacCuaTui.
-
-Không tăng `MAX_PAGES` quá lớn. Project sử dụng giới hạn nhỏ và crawl delay để phù hợp với bài thực hành.
+assiment1/
+├── main.py          # entry point
+├── crawler.py       # BFS crawler, robots.txt, HTTP requests, statistics
+├── url_frontier.py  # URL frontier, normalization, duplicate detection
+├── parser.py        # page info extraction, link extraction and filtering
+├── database.py      # SQLite tables and queries
+├── config.py        # all crawling parameters
+├── check_domain.py  # helper: check robots.txt and accessibility
+├── data/crawler.db  # output database
+├── requirements.txt
+└── README.md
+```
