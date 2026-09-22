@@ -1,0 +1,52 @@
+test_403_stops_origin_without_retrying (test_integration.LocalCrawlerIntegrationTests.test_403_stops_origin_without_retrying) ... ok
+test_404_and_500_are_recorded_and_other_seed_continues (test_integration.LocalCrawlerIntegrationTests.test_404_and_500_are_recorded_and_other_seed_continues) ... ok
+test_429_stops_origin_and_does_not_retry (test_integration.LocalCrawlerIntegrationTests.test_429_stops_origin_and_does_not_retry) ... ok
+test_challenge_200_stops_origin_without_storage (test_integration.LocalCrawlerIntegrationTests.test_challenge_200_stops_origin_without_storage) ... ok
+test_connection_error_records_failure (test_integration.LocalCrawlerIntegrationTests.test_connection_error_records_failure) ... ok
+test_delay_used_between_same_origin_requests (test_integration.LocalCrawlerIntegrationTests.test_delay_used_between_same_origin_requests) ... ok
+test_empty_javascript_shell_is_not_reported_as_pass (test_integration.LocalCrawlerIntegrationTests.test_empty_javascript_shell_is_not_reported_as_pass) ... ok
+test_longest_robots_rule_denies_even_with_allow_root_first (test_integration.LocalCrawlerIntegrationTests.test_longest_robots_rule_denies_even_with_allow_root_first) ... ok
+test_max_depth_zero_fetches_seed_only (test_integration.LocalCrawlerIntegrationTests.test_max_depth_zero_fetches_seed_only) ... ok
+test_max_pages_bounds_successful_pages (test_integration.LocalCrawlerIntegrationTests.test_max_pages_bounds_successful_pages) ... ok
+test_max_requests_counts_robots_and_content_requests (test_integration.LocalCrawlerIntegrationTests.test_max_requests_counts_robots_and_content_requests) ... ok
+test_non_html_content_is_not_parsed_or_stored (test_integration.LocalCrawlerIntegrationTests.test_non_html_content_is_not_parsed_or_stored) ... ok
+test_queued_redirect_target_is_only_fetched_once (test_integration.LocalCrawlerIntegrationTests.test_queued_redirect_target_is_only_fetched_once) ... ok
+test_real_http_bfs_and_sqlite_with_duplicate_cycle_filtering (test_integration.LocalCrawlerIntegrationTests.test_real_http_bfs_and_sqlite_with_duplicate_cycle_filtering) ... ok
+test_redirect_loop_stops_without_repeated_request (test_integration.LocalCrawlerIntegrationTests.test_redirect_loop_stops_without_repeated_request) ... ok
+test_redirect_outside_allowlist_is_not_followed (test_integration.LocalCrawlerIntegrationTests.test_redirect_outside_allowlist_is_not_followed) ... ok
+test_redirect_to_robots_denied_target_is_not_followed (test_integration.LocalCrawlerIntegrationTests.test_redirect_to_robots_denied_target_is_not_followed) ... ok
+test_response_size_limit_prevents_storage (test_integration.LocalCrawlerIntegrationTests.test_response_size_limit_prevents_storage) ... ok
+test_robots_denial_sends_no_content_request (test_integration.LocalCrawlerIntegrationTests.test_robots_denial_sends_no_content_request) ... ok
+test_robots_unavailable_fails_closed (test_integration.LocalCrawlerIntegrationTests.test_robots_unavailable_fails_closed) ... ok
+test_timeout_records_failure_and_continues_other_seed (test_integration.LocalCrawlerIntegrationTests.test_timeout_records_failure_and_continues_other_seed) ... ok
+test_spotify_policy_block_never_sends_http_requests (test_integration.SpotifyPolicyRegressionTests.test_spotify_policy_block_never_sends_http_requests) ... ok
+test_allow_wins_equal_length_regardless_of_order (test_robots.RobotsTests.test_allow_wins_equal_length_regardless_of_order) ... ok
+test_crawl_delay_and_request_rate_take_stricter_interval (test_robots.RobotsTests.test_crawl_delay_and_request_rate_take_stricter_interval) ... ok
+test_empty_disallow_allows (test_robots.RobotsTests.test_empty_disallow_allows) ... ok
+test_equally_specific_groups_are_combined (test_robots.RobotsTests.test_equally_specific_groups_are_combined) ... ok
+test_longest_match_overrides_earlier_allow_root (test_robots.RobotsTests.test_longest_match_overrides_earlier_allow_root) ... ok
+test_percent_encoded_unreserved_path_cannot_bypass (test_robots.RobotsTests.test_percent_encoded_unreserved_path_cannot_bypass) ... ok
+test_specific_agent_overrides_wildcard (test_robots.RobotsTests.test_specific_agent_overrides_wildcard) ... ok
+test_unicode_and_percent_encoding_match (test_robots.RobotsTests.test_unicode_and_percent_encoding_match) ... ok
+test_wildcard_end_anchor_and_query (test_robots.RobotsTests.test_wildcard_end_anchor_and_query) ... ok
+test_parameterized_sql_preserves_quoted_unicode_text (test_units.DatabaseTests.test_parameterized_sql_preserves_quoted_unicode_text) ... ok
+test_persists_pages_and_deduplicates_records (test_units.DatabaseTests.test_persists_pages_and_deduplicates_records) ... ok
+test_schema_has_required_pages_and_links_columns (test_units.DatabaseTests.test_schema_has_required_pages_and_links_columns) ... ok
+test_duplicate_queued_and_visited_urls_are_rejected (test_units.FrontierTests.test_duplicate_queued_and_visited_urls_are_rejected) ... ok
+test_fifo_order_produces_breadth_first_traversal (test_units.FrontierTests.test_fifo_order_produces_breadth_first_traversal) ... ok
+test_extracts_required_assignment_fields_and_unicode (test_units.ParserTests.test_extracts_required_assignment_fields_and_unicode) ... ok
+test_links_are_resolved_deduplicated_and_valid_http (test_units.ParserTests.test_links_are_resolved_deduplicated_and_valid_http) ... ok
+test_missing_title_does_not_crash (test_units.ParserTests.test_missing_title_does_not_crash) ... ok
+test_omits_script_and_style_text (test_units.ParserTests.test_omits_script_and_style_text) ... ok
+test_localhost_port_does_not_change_domain (test_units.URLTests.test_localhost_port_does_not_change_domain) ... ok
+test_non_html_resource_extensions_are_filtered (test_units.URLTests.test_non_html_resource_extensions_are_filtered) ... ok
+test_normalizes_scheme_host_and_default_port (test_units.URLTests.test_normalizes_scheme_host_and_default_port) ... ok
+test_rejects_credentials_and_invalid_port (test_units.URLTests.test_rejects_credentials_and_invalid_port) ... ok
+test_rejects_non_web_schemes_and_invalid_urls (test_units.URLTests.test_rejects_non_web_schemes_and_invalid_urls) ... ok
+test_resolves_relative_url_and_removes_fragment (test_units.URLTests.test_resolves_relative_url_and_removes_fragment) ... ok
+test_spotify_domain_filter_is_exact (test_units.URLTests.test_spotify_domain_filter_is_exact) ... ok
+
+----------------------------------------------------------------------
+Ran 47 tests in 1.688s
+
+OK

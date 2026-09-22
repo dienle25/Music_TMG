@@ -1,0 +1,3 @@
+* text=auto eol=lf
+*.db -text
+docs/evidence/robots.txt -text

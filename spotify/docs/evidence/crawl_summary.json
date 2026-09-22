@@ -1,0 +1,43 @@
+{
+  "started_at": "2026-09-22T06:42:03.610739+00:00",
+  "elapsed_seconds": 0.016,
+  "pages_crawled": 0,
+  "links_found": 0,
+  "unique_urls_discovered": 0,
+  "skipped_urls": 0,
+  "failed_requests": 0,
+  "depth_counts": {},
+  "http_status_counts": {},
+  "errors": [],
+  "database_counts": {
+    "pages": 0,
+    "links": 0,
+    "unique_urls": 0
+  },
+  "request_count": 0,
+  "robots_checks": [],
+  "page_diagnostics": [],
+  "frontier_remaining": 0,
+  "stop_reason": "no_verified_seed_urls",
+  "status": "EXTERNAL_BLOCKER",
+  "configuration": {
+    "seed_urls": [],
+    "allowed_domains": [
+      "open.spotify.com"
+    ],
+    "max_depth": 1,
+    "max_pages": 3,
+    "request_timeout": 10,
+    "crawl_delay": 1.0,
+    "user_agent": "SEG301-VietnameseMusicCrawler/1.0",
+    "max_bytes": 2000000,
+    "max_requests": 90
+  },
+  "topic": "Vietnamese Music on Spotify",
+  "blockers": [
+    "SPOTIFY_POLICY_RESTRICTION",
+    "SEED_URL_VALIDATION_PENDING",
+    "CUSTOM_TOPIC_REQUIRES_APPROVAL",
+    "SECOND_DOMAIN_REQUIRED"
+  ]
+}

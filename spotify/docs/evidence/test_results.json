@@ -1,0 +1,12 @@
+{
+  "checked_at": "2026-09-22T06:28:09.675138+00:00",
+  "python": "3.12.10",
+  "tests_run": 47,
+  "passed": 47,
+  "failed": 0,
+  "errors": 0,
+  "skipped": 0,
+  "uses_spotify": false,
+  "integration_transport": "real HTTP on loopback; synthetic fixtures",
+  "successful": true
+}

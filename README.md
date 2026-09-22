@@ -262,3 +262,8 @@ Maximum Depth         : 2
 Website structure and crawling policies can change. Before submitting, check the current `robots.txt` and terms of use of NhacCuaTui.
 
 Không tăng `MAX_PAGES` quá lớn. Project sử dụng giới hạn nhỏ và crawl delay để phù hợp với bài thực hành.
+
+
+## Module Spotify
+
+Crawler Nhạc Việt trên Spotify được bổ sung tại [spotify/](spotify/). Xem [README](spotify/README.md) và [báo cáo tiếng Việt](spotify/docs/CRAWLING_REPORT.md). Module này có 47 tests riêng; phần NhacCuaTui ở trên được giữ nguyên.

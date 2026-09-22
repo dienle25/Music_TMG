@@ -1,0 +1,10 @@
+{
+  "url": "https://open.spotify.com/robots.txt",
+  "checked_at": "2026-09-21T10:19:11.296121+00:00",
+  "user_agent": "SEG301-VietnameseMusicCrawler/1.0",
+  "status_code": 200,
+  "final_url": "https://open.spotify.com/robots.txt",
+  "content_type": "text/plain; charset=utf-8",
+  "size_bytes": 1859,
+  "sha256": "f4d19243e326c223544e5691275ed35a1c72d67ef765988087b1063a33d7838b"
+}

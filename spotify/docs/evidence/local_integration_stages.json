@@ -1,0 +1,370 @@
+[
+  {
+    "started_at": "2026-09-22T06:28:09.680909+00:00",
+    "elapsed_seconds": 0.094,
+    "pages_crawled": 3,
+    "links_found": 8,
+    "unique_urls_discovered": 8,
+    "skipped_urls": 3,
+    "failed_requests": 0,
+    "depth_counts": {
+      "0": 1,
+      "1": 2
+    },
+    "http_status_counts": {
+      "200": 3
+    },
+    "errors": [],
+    "database_counts": {
+      "pages": 3,
+      "links": 8,
+      "unique_urls": 3
+    },
+    "request_count": 4,
+    "robots_checks": [
+      {
+        "url": "http://127.0.0.1:62088/robots.txt",
+        "status_code": 200,
+        "available": true
+      }
+    ],
+    "page_diagnostics": [
+      {
+        "url": "http://127.0.0.1:62088/seed",
+        "final_url": "http://127.0.0.1:62088/seed",
+        "status_code": 200,
+        "content_type": "text/html",
+        "html_size": 303,
+        "title": "Local integration fixture",
+        "visible_text_length": 60,
+        "links_found": 5,
+        "depth": 0,
+        "response_time_seconds": 0.0,
+        "processing_time_seconds": 0.031,
+        "http_access": "PASS",
+        "html_crawlability": "PASS",
+        "javascript_dependency": "NOT_DETERMINED"
+      },
+      {
+        "url": "http://127.0.0.1:62088/a",
+        "final_url": "http://127.0.0.1:62088/a",
+        "status_code": 200,
+        "content_type": "text/html",
+        "html_size": 152,
+        "title": "Local integration fixture",
+        "visible_text_length": 15,
+        "links_found": 2,
+        "depth": 1,
+        "response_time_seconds": 0.0,
+        "processing_time_seconds": 0.016,
+        "http_access": "PASS",
+        "html_crawlability": "PARTIAL",
+        "javascript_dependency": "NOT_DETERMINED"
+      },
+      {
+        "url": "http://127.0.0.1:62088/b",
+        "final_url": "http://127.0.0.1:62088/b",
+        "status_code": 200,
+        "content_type": "text/html",
+        "html_size": 127,
+        "title": "Local integration fixture",
+        "visible_text_length": 9,
+        "links_found": 1,
+        "depth": 1,
+        "response_time_seconds": 0.0,
+        "processing_time_seconds": 0.016,
+        "http_access": "PASS",
+        "html_crawlability": "PARTIAL",
+        "javascript_dependency": "NOT_DETERMINED"
+      }
+    ],
+    "frontier_remaining": 3,
+    "stop_reason": "max_pages",
+    "status": "PARTIAL",
+    "sqlite_integrity": "ok",
+    "sqlite_rows": [
+      3,
+      3
+    ],
+    "max_pages": 3,
+    "evidence_type": "SYNTHETIC_LOCAL_HTTP_ONLY",
+    "http_request_order": [
+      "/robots.txt",
+      "/seed",
+      "/a",
+      "/b"
+    ]
+  },
+  {
+    "started_at": "2026-09-22T06:28:09.801076+00:00",
+    "elapsed_seconds": 0.156,
+    "pages_crawled": 5,
+    "links_found": 9,
+    "unique_urls_discovered": 9,
+    "skipped_urls": 5,
+    "failed_requests": 0,
+    "depth_counts": {
+      "0": 1,
+      "1": 2,
+      "2": 2
+    },
+    "http_status_counts": {
+      "200": 5
+    },
+    "errors": [
+      {
+        "url": "http://127.0.0.1:62093/blocked",
+        "reason": "robots_denied_or_unavailable"
+      }
+    ],
+    "database_counts": {
+      "pages": 5,
+      "links": 9,
+      "unique_urls": 5
+    },
+    "request_count": 6,
+    "robots_checks": [
+      {
+        "url": "http://127.0.0.1:62093/robots.txt",
+        "status_code": 200,
+        "available": true
+      }
+    ],
+    "page_diagnostics": [
+      {
+        "url": "http://127.0.0.1:62093/seed",
+        "final_url": "http://127.0.0.1:62093/seed",
+        "status_code": 200,
+        "content_type": "text/html",
+        "html_size": 303,
+        "title": "Local integration fixture",
+        "visible_text_length": 60,
+        "links_found": 5,
+        "depth": 0,
+        "response_time_seconds": 0.0,
+        "processing_time_seconds": 0.047,
+        "http_access": "PASS",
+        "html_crawlability": "PASS",
+        "javascript_dependency": "NOT_DETERMINED"
+      },
+      {
+        "url": "http://127.0.0.1:62093/a",
+        "final_url": "http://127.0.0.1:62093/a",
+        "status_code": 200,
+        "content_type": "text/html",
+        "html_size": 152,
+        "title": "Local integration fixture",
+        "visible_text_length": 15,
+        "links_found": 2,
+        "depth": 1,
+        "response_time_seconds": 0.0,
+        "processing_time_seconds": 0.016,
+        "http_access": "PASS",
+        "html_crawlability": "PARTIAL",
+        "javascript_dependency": "NOT_DETERMINED"
+      },
+      {
+        "url": "http://127.0.0.1:62093/b",
+        "final_url": "http://127.0.0.1:62093/b",
+        "status_code": 200,
+        "content_type": "text/html",
+        "html_size": 127,
+        "title": "Local integration fixture",
+        "visible_text_length": 9,
+        "links_found": 1,
+        "depth": 1,
+        "response_time_seconds": 0.0,
+        "processing_time_seconds": 0.015,
+        "http_access": "PASS",
+        "html_crawlability": "PARTIAL",
+        "javascript_dependency": "NOT_DETERMINED"
+      },
+      {
+        "url": "http://127.0.0.1:62093/a1",
+        "final_url": "http://127.0.0.1:62093/a1",
+        "status_code": 200,
+        "content_type": "text/html",
+        "html_size": 145,
+        "title": "Local integration fixture",
+        "visible_text_length": 21,
+        "links_found": 1,
+        "depth": 2,
+        "response_time_seconds": 0.016,
+        "processing_time_seconds": 0.031,
+        "http_access": "PASS",
+        "html_crawlability": "PARTIAL",
+        "javascript_dependency": "NOT_DETERMINED"
+      },
+      {
+        "url": "http://127.0.0.1:62093/b1",
+        "final_url": "http://127.0.0.1:62093/b1",
+        "status_code": 200,
+        "content_type": "text/html",
+        "html_size": 114,
+        "title": "Local integration fixture",
+        "visible_text_length": 13,
+        "links_found": 0,
+        "depth": 2,
+        "response_time_seconds": 0.0,
+        "processing_time_seconds": 0.0,
+        "http_access": "PASS",
+        "html_crawlability": "PARTIAL",
+        "javascript_dependency": "NOT_DETERMINED"
+      }
+    ],
+    "frontier_remaining": 0,
+    "stop_reason": "max_pages",
+    "status": "PARTIAL",
+    "sqlite_integrity": "ok",
+    "sqlite_rows": [
+      5,
+      5
+    ],
+    "max_pages": 5,
+    "evidence_type": "SYNTHETIC_LOCAL_HTTP_ONLY",
+    "http_request_order": [
+      "/robots.txt",
+      "/seed",
+      "/a",
+      "/b",
+      "/a1",
+      "/b1"
+    ]
+  },
+  {
+    "started_at": "2026-09-22T06:28:09.991243+00:00",
+    "elapsed_seconds": 0.109,
+    "pages_crawled": 5,
+    "links_found": 9,
+    "unique_urls_discovered": 9,
+    "skipped_urls": 5,
+    "failed_requests": 0,
+    "depth_counts": {
+      "0": 1,
+      "1": 2,
+      "2": 2
+    },
+    "http_status_counts": {
+      "200": 5
+    },
+    "errors": [
+      {
+        "url": "http://127.0.0.1:62100/blocked",
+        "reason": "robots_denied_or_unavailable"
+      }
+    ],
+    "database_counts": {
+      "pages": 5,
+      "links": 9,
+      "unique_urls": 5
+    },
+    "request_count": 6,
+    "robots_checks": [
+      {
+        "url": "http://127.0.0.1:62100/robots.txt",
+        "status_code": 200,
+        "available": true
+      }
+    ],
+    "page_diagnostics": [
+      {
+        "url": "http://127.0.0.1:62100/seed",
+        "final_url": "http://127.0.0.1:62100/seed",
+        "status_code": 200,
+        "content_type": "text/html",
+        "html_size": 303,
+        "title": "Local integration fixture",
+        "visible_text_length": 60,
+        "links_found": 5,
+        "depth": 0,
+        "response_time_seconds": 0.016,
+        "processing_time_seconds": 0.016,
+        "http_access": "PASS",
+        "html_crawlability": "PASS",
+        "javascript_dependency": "NOT_DETERMINED"
+      },
+      {
+        "url": "http://127.0.0.1:62100/a",
+        "final_url": "http://127.0.0.1:62100/a",
+        "status_code": 200,
+        "content_type": "text/html",
+        "html_size": 152,
+        "title": "Local integration fixture",
+        "visible_text_length": 15,
+        "links_found": 2,
+        "depth": 1,
+        "response_time_seconds": 0.015,
+        "processing_time_seconds": 0.015,
+        "http_access": "PASS",
+        "html_crawlability": "PARTIAL",
+        "javascript_dependency": "NOT_DETERMINED"
+      },
+      {
+        "url": "http://127.0.0.1:62100/b",
+        "final_url": "http://127.0.0.1:62100/b",
+        "status_code": 200,
+        "content_type": "text/html",
+        "html_size": 127,
+        "title": "Local integration fixture",
+        "visible_text_length": 9,
+        "links_found": 1,
+        "depth": 1,
+        "response_time_seconds": 0.016,
+        "processing_time_seconds": 0.016,
+        "http_access": "PASS",
+        "html_crawlability": "PARTIAL",
+        "javascript_dependency": "NOT_DETERMINED"
+      },
+      {
+        "url": "http://127.0.0.1:62100/a1",
+        "final_url": "http://127.0.0.1:62100/a1",
+        "status_code": 200,
+        "content_type": "text/html",
+        "html_size": 145,
+        "title": "Local integration fixture",
+        "visible_text_length": 21,
+        "links_found": 1,
+        "depth": 2,
+        "response_time_seconds": 0.0,
+        "processing_time_seconds": 0.015,
+        "http_access": "PASS",
+        "html_crawlability": "PARTIAL",
+        "javascript_dependency": "NOT_DETERMINED"
+      },
+      {
+        "url": "http://127.0.0.1:62100/b1",
+        "final_url": "http://127.0.0.1:62100/b1",
+        "status_code": 200,
+        "content_type": "text/html",
+        "html_size": 114,
+        "title": "Local integration fixture",
+        "visible_text_length": 13,
+        "links_found": 0,
+        "depth": 2,
+        "response_time_seconds": 0.0,
+        "processing_time_seconds": 0.016,
+        "http_access": "PASS",
+        "html_crawlability": "PARTIAL",
+        "javascript_dependency": "NOT_DETERMINED"
+      }
+    ],
+    "frontier_remaining": 0,
+    "stop_reason": "frontier_empty",
+    "status": "PARTIAL",
+    "sqlite_integrity": "ok",
+    "sqlite_rows": [
+      5,
+      5
+    ],
+    "max_pages": 10,
+    "evidence_type": "SYNTHETIC_LOCAL_HTTP_ONLY",
+    "http_request_order": [
+      "/robots.txt",
+      "/seed",
+      "/a",
+      "/b",
+      "/a1",
+      "/b1"
+    ]
+  }
+]
